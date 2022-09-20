@@ -108,7 +108,9 @@ def eliminarProducto(request, id):
         p = Producto.objects.get(pk = id)
         p.delete()
         messages.success(request, "Producto eliminado correctamente!")
-    except Exeption as e:
+    except IntegrityError:
+        messages.warning(request, "No puede eliminar este producto por que otros registros estan relacionados con el...")
+    except Exception as e:
         messages.error(request, f"Error: {e}")
     
     return redirect('planta:listarProducto')
