@@ -1,0 +1,73 @@
+{% extends "planta/base.html"%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Planta Sena</title>
+    <link href="{% static 'planta/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'planta/css/hoja1.css' %}" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'planta/favicon_io/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'planta/favicon_io/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'planta/favicon_io/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'planta/favicon_io//site.webmanifest' %}">
+</head>
+<body>
+
+    {% block contenedor %}
+    <h1>Productos</h1>
+    
+    <a class="btn btn-warning" href="{% url 'planta:formularioProducto' %}">Agregar</a>
+    <br>
+
+    {% if messages %}
+        
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}dark{% endif %}"role="alert">{{ message }}</div>
+            {% endfor %}
+        
+    {% endif %}
+
+    {% if datos %}
+
+        <table width="100%" border="1">
+            <thead>     
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Ficha tecnica</th>
+                    <th>Costo</th>
+                    <th>Categoria</th>
+                    <th>Color</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for t in datos %}
+                <tr>
+                    <td>{{ t.id }} </td>
+                    <td>{{ t.nombre}} </td>
+                    <td>{{ t.ficha_tecnica }} </td>
+                    <td>{{ t.costo }} </td>
+                    <td>{{ t.categoria.nombre}}</td>
+                    <td>{{ t.get_color_display}} </td>
+                    <div class="d-grid gap-2 d-md-block">
+                    <td><a class="btn btn-primary" href="{% url 'planta:eliminarProducto' t.id %}">Eliminar</a>
+                        <a class="btn btn-dark" href="{% url 'planta:formularioEditar' t.id %}">Editar</a>
+                    </td>
+                    </div>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else%}
+        <h1>No hay datos...</h1>
+    {% endif %}
+    {% endblock%}
+
+
+</body> 
+</html>

@@ -1,0 +1,65 @@
+{% extends "planta/base.html"%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Planta Sena</title>
+    <link href="{% static 'planta/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'planta/css/hoja1.css' %}" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'planta/favicon_io/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'planta/favicon_io/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'planta/favicon_io/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'planta/favicon_io//site.webmanifest' %}">
+</head>
+<body>
+
+    {% block contenedor %}
+    <h1>Trabajadores</h1>
+    
+    <a class="btn btn-warning" href="{% url 'planta:formularioTrabajador' %}">Agregar</a>
+    <br>
+
+    {% if messages %}
+        
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}dark{% endif %}"role="alert">{{ message }}</div>
+            {% endfor %}
+        
+    {% endif %}
+
+    {% if datos %}
+
+        <table width="100%" border="1">
+            <thead>     
+                <tr>
+                    <th>ID</th>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for t in datos %}
+                <tr>
+                    <td>{{ t.id }} </td>
+                    <td>{{ t.cedula}} </td>
+                    <td>{{ t.nombre }} </td>
+                    <td>{{ t.apellido }} </td>
+                    <td>{{ t.correo}} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else%}
+        <h1>No hay datos...</h1>
+    {% endif %}
+    {% endblock%}
+
+
+</body> 
+</html>

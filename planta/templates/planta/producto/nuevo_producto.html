@@ -1,0 +1,57 @@
+{% extends "planta/base.html"%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block contenedor %}
+    <h4>Agregar Producto</h4>
+    <form style="display: inline-block" action="{% url 'planta:guardarProducto'%}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label  class="form-label">Nombre</label>
+          <input name="nombre"type="text" class="form-control">
+ 
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ficha Tecnica</label>
+          <textarea name="ficha_tecnica" cols="30" rows="10"></textarea>
+        
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Costo</label>
+            <input name="costo" type="number" class="form-control" >
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Categoria</label><br>
+            <select name="categoria">
+                <option value="">Seleccione:</option>
+                {% for c in cat %}
+                    <option value="{{c.id}}" >{{ c.nombre }}</option>
+                {% endfor %}
+            </select><br>
+   
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Color</label><br>
+            <select name="color" >
+                <option value="">Seleccione</option>
+                <option value="r">ROJO</option>
+                <option value="v">VERDE</option>
+                <option value="a">AZUL</option>
+            </select>
+        </div>
+        
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+      {%endblock%}
+
+
+</body>
+</html>
